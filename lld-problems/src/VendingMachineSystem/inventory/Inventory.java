@@ -24,6 +24,7 @@ public class Inventory {
     public Product getProduct(String itemCode) {
         return productMap.get(itemCode);
     }
+
     public synchronized void removeProduct(Product product) {
         String productCode = product.getCode();
         if (!productStockMap.containsKey(productCode)) return;
@@ -34,11 +35,11 @@ public class Inventory {
         totalItemsInStock -= quantity;
     }
 
-    public synchronized boolean reserveStock(String productCode, int quantity) {
+    public synchronized boolean reserveStock(String productCode) {
         int currentStock = productStockMap.getOrDefault(productCode, 0);
-        if (currentStock >= quantity) {
-            productStockMap.put(productCode, currentStock - quantity);
-            totalItemsInStock -= quantity;
+        if (currentStock >= 1) {
+            productStockMap.put(productCode, currentStock - 1);
+            totalItemsInStock -= 1;
             return true;
         }
         return false;

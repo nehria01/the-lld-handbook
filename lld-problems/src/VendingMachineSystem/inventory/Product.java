@@ -1,19 +1,17 @@
 package VendingMachineSystem.inventory;
 
 public class Product {
-    private java.lang.String code;
-    private java.lang.String name;
+    private String code;
+    private String name;
     private double price;
-    private int quantity;
 
-    public Product(java.lang.String code, java.lang.String name, double price, int quantity) {
+    public Product(String code, String name, double price) {
         this.code = code;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
     }
 
-    public java.lang.String getCode() {
+    public String getCode() {
         return code;
     }
 
@@ -29,7 +27,7 @@ public class Product {
         this.price = price;
     }
 
-    public java.lang.String getName() {
+    public String getName() {
         return name;
     }
 
@@ -37,11 +35,4 @@ public class Product {
         this.name = name;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

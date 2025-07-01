@@ -1,8 +1,10 @@
 package VendingMachineSystem.state;
 
 import VendingMachineSystem.Coin;
-import VendingMachineSystem.VendingMachine;
+import VendingMachineSystem.machine.VendingMachine;
 import VendingMachineSystem.exception.VendingMachineException;
+
+import java.util.List;
 
 public class HasCoinState implements VendingMachineState{
     private VendingMachine vendingMachine;
@@ -12,7 +14,7 @@ public class HasCoinState implements VendingMachineState{
     }
 
     @Override
-    public void selectItem(String itemCode, int itemCount) throws VendingMachineException {
+    public void selectItem(String itemCode) throws VendingMachineException {
         throw new VendingMachineException("No product selected; cannot insert coin");
     }
 
@@ -20,25 +22,26 @@ public class HasCoinState implements VendingMachineState{
     public void insertCoin(Coin coin) throws VendingMachineException {
         System.out.println("You inserted coin " + coin);
         vendingMachine.addUserCoin(coin);
-        vendingMachine.setCurrentState(vendingMachine.getDispensingState());
     }
 
     @Override
     public void cancelTransaction() throws VendingMachineException {
         System.out.println("Cancelling transaction please collect any deposited coins from the coin tray");
-        dispenseCoin();
+        dispenseCoin(vendingMachine.getUserCoins());
         vendingMachine.resetMachineState();
     }
 
     @Override
     public void dispenseItem() throws VendingMachineException {
-        throw new VendingMachineException("No product selected; cannot insert coin");
+        vendingMachine.setCurrentState(vendingMachine.getDispensingState());
+        vendingMachine.getCurrentState().dispenseItem();
     }
 
     @Override
-    public void dispenseCoin() throws VendingMachineException {
-        for(Coin coin : vendingMachine.getUserCoinsList())
+    public void dispenseCoin(List<Coin> coins) throws VendingMachineException {
+        vendingMachine.removeCoinsFromInventory(coins);
+        for(Coin coin : coins) {
             System.out.println("Dispensing Coin :: " + coin);
-
+        }
     }
 }

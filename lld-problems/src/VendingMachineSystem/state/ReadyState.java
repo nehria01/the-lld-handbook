@@ -1,25 +1,26 @@
 package VendingMachineSystem.state;
 
 import VendingMachineSystem.Coin;
-import VendingMachineSystem.VendingMachine;
+import VendingMachineSystem.machine.VendingMachine;
 import VendingMachineSystem.exception.VendingMachineException;
 
-public class IdleState implements VendingMachineState{
+import java.util.List;
+
+public class ReadyState implements VendingMachineState{
     private VendingMachine vendingMachine;
 
-    public IdleState(VendingMachine vendingMachine) {
+    public ReadyState(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
     }
 
     @Override
-    public void selectItem(String itemCode, int itemCount) throws VendingMachineException {
-        boolean reserveStock = vendingMachine.getInventory().reserveStock(itemCode, itemCount);
+    public void selectItem(String itemCode) throws VendingMachineException {
+        boolean reserveStock = vendingMachine.getInventory().reserveStock(itemCode);
         if(!reserveStock)
             throw new VendingMachineException("Product out of stock !");
         vendingMachine.setSelectedItemCode(itemCode);
         vendingMachine.setCurrentState(vendingMachine.getHasCoinState());
-        vendingMachine.setSelectedProductQuantity(itemCount);
-        System.out.println("You selected item :: " + vendingMachine.getInventory().getProduct(itemCode).getName() + " quantity :: " + itemCount);
+        System.out.println("You selected item :: " + vendingMachine.getInventory().getProduct(itemCode).getName());
     }
 
     @Override
@@ -38,7 +39,7 @@ public class IdleState implements VendingMachineState{
     }
 
     @Override
-    public void dispenseCoin() throws VendingMachineException {
+    public void dispenseCoin(List<Coin> coins) throws VendingMachineException {
         throw new VendingMachineException("No coins to be dispensed");
     }
 }

@@ -1,9 +1,10 @@
 package VendingMachineSystem;
 
 public enum Coin {
-    PENNY(1),
-    NICKEL(5),
-    QUARTER(25);
+    ONE(1),
+    FIVE(5),
+    TEN(10),
+    TWENTY(20);
 
     private final int value;
 
