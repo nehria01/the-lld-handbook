@@ -46,7 +46,7 @@ public class DispensingState implements VendingMachineState {
                 System.out.println("Not enough funds to process change, please collect your coins");
                 dispenseCoin(vendingMachine.getUserCoins());
             }
-
+        //todo -- issuing change
         }
         if(userAmount < amount) {
             System.out.println("Insufficient funds please collect your coins");
