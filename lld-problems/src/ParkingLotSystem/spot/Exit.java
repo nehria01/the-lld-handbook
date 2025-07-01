@@ -28,7 +28,7 @@ public class Exit extends Spot {
         }
     }
 
-    private double getCost(Ticket ticket) {
+    public double getCost(Ticket ticket) {
         return costCalculationStrategy.getCost(ticket);
     }
 

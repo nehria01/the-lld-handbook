@@ -54,7 +54,18 @@ public class ParkingLotDemo {
             List<Exit> exits = level.getExits();
             Exit exit = exits.get(random.nextInt(exits.size()));
             Ticket ticket = parkingLot.getActiveTicket(license);
-            boolean success = parkingLot.unparkVehicle(levelIndex, exit, ticket, 500);
+            double correctCost = exit.getCost(ticket);
+            double paymentAmount;
+            int chance = random.nextInt(100);
+
+            if (chance < 70) {
+                paymentAmount = correctCost;
+            } else if (chance < 85) {
+                paymentAmount = correctCost - 20;
+            } else {
+                paymentAmount = correctCost + 30;
+            }
+            boolean success = parkingLot.unparkVehicle(levelIndex, exit, ticket, paymentAmount);
             if (success) {
                 System.out.println("Unparked: " + license);
             } else {
